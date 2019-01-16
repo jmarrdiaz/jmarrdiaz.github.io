@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>memAPP | La web que te ayudará a memorizar</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../dist/css/localstorage.css">
+    
+	<link rel="icon" href="../dist/img/icono.jpg" type="image/x-icon" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="hold-transition login-page">	
+
+    <div class="login-box" style="width: 90%">
+      <div class="login-logo" style="visibility: hidden">
+        <span><b>mem</b>APP</span>
+      </div><!-- /.login-logo -->
+      <div class="login-box-body">
+	  <div id="app">
+		<div class="cookiesms" id="cookie1" style="font-size: 14px">
+        <span v-if='es'>Esta web utiliza LocalStorage para guardar los textos en el navegador. Si continuas navegando estás aceptando esto. </span>
+        <span v-else>This website uses LocalStorage for save texts in the browser. If you continue, you have accepted that.</span>
+        <button onclick="controlcookies()">OK</button>
+        <div v-if='es' class="cookies2" onmouseover="document.getElementById('cookie1').style.bottom = '0px';">Atención </div>
+        <div v-else class="cookies2" onmouseover="document.getElementById('cookie1').style.bottom = '0px';">Attention </div>
+        </div>
+		
+		<div v-if="show_texto_original">			
+			<p v-if="show_cabecera && es">Original:</p>			
+	  		<textarea v-if="es" rows="10" cols="100" v-model="texto_original" placeholder="Escribe el texto a memorizar..." style="width: 100%">
+	  		</textarea>
+	  		<textarea v-else rows="10" cols="100" v-model="texto_original" placeholder="Write here..." style="width: 100%">
+	  		</textarea>
+	  		<button v-if="show_btn_recordar && es" v-on:click="salvar_storage" style="display: block">Quiero recordarlo!</button>
+	  		<button v-if="show_btn_recordar && !es" v-on:click="salvar_storage" style="display: block">I want to remember it!</button>
+  		</div>
+  		<div v-if="show_texto_recordado">
+  			<p v-if="show_cabecera && es">Recordado:</p>
+  			<p v-if="show_cabecera && !es">Remembered:</p>
+	  		<textarea v-if="es" style="width: 100%" id="txt_recordado" rows="10" cols="100" v-model="texto_recordado" v-on:keyup="botones_sugerencias" placeholder="Empieza a escribir lo que recuerdes...">
+	  		</textarea>
+	  		<textarea v-else style="width: 100%" id="txt_recordado" rows="10" cols="100" v-model="texto_recordado" v-on:keyup="botones_sugerencias" placeholder="Write that you remember...">
+	  		</textarea>
+	  		<button v-if="es && show_btn_palabra" @click="sug_palabra">Sugiéreme una palabra</button>
+	  		<button v-if="!es && show_btn_palabra" @click="sug_palabra">Suggest me a word</button>
+
+	  		<button v-if="es && show_btn_frase" @click="sug_frase">Sugiéreme una frase</button>
+	  		<button v-if="!es && show_btn_frase" @click="sug_frase">Suggest me a phrase</button>
+	  		<div id="sugerencia" style="display: none"></div>
+  		</div>
+  		<button @click="mostrar_original" v-if="show_texto_recordado && !fin && es" style="margin-top: 5px">He terminado</button>
+  		<button @click="mostrar_original" v-if="show_texto_recordado && !fin && !es" style="margin-top: 5px">Done</button>
+
+  		<button @click="empezar" v-if="show_texto_recordado && show_texto_original && es">Empezar de nuevo</button>
+  		<button @click="empezar" v-if="show_texto_recordado && show_texto_original && !es">Start again</button>	  	
+  		
+  		<!-- <pre>{{ $data }}</pre> -->
+		</div>		
+      </div><!-- /.login-box-body -->
+    </div><!-- /.login-box -->   
+    
+    <!-- development version, includes helpful console warnings -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+	<!-- production version, optimized for size and speed -->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	
+	<script src="../dist/js/memapp.js"></script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126062801-1"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'UA-126062801-1');
+	</script>
+
+	
+  </body>
+</html>
